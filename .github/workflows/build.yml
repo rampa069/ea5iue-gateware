@@ -31,6 +31,9 @@ jobs:
           - hl2b5up_ak4951v3
           - hl2b5up_ak4951v3_yaesu
           - hl2b5up_ak4951v4_yaesu
+    env:
+      QUARTUS_ROOTDIR: /home/rampa/Quartus/quartus
+      PATH: /home/rampa/Quartus/quartus/bin:/usr/local/bin:/usr/bin:/bin
     steps:
       - uses: actions/checkout@v4
 
