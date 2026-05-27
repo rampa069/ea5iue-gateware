@@ -4,16 +4,20 @@ all:
 	$(MAKE) -C hl2b3to4_main
 	$(MAKE) -C hl2b3to4_cicrx
 	$(MAKE) -C hl2b5up_main
+	$(MAKE) -C hl2b5up_main_iambic
 	$(MAKE) -C hl2b5up_6rx
 	$(MAKE) -C hl2b5up_cicrx
 	$(MAKE) -C hl2b5up_15ce
 	$(MAKE) -C hl2b5up_ak4951v3
+	$(MAKE) -C hl2b5up_ak4951v3_yaesu
+	$(MAKE) -C hl2b5up_ak4951v4_yaesu
 
 release:
 	$(MAKE) -C hl2b2_main
 	$(MAKE) -C hl2b3to4_main
 	$(MAKE) -C hl2b3to4_cicrx
 	$(MAKE) -C hl2b5up_main
+	$(MAKE) -C hl2b5up_main_iambic
 	$(MAKE) -C hl2b5up_6rx
 	$(MAKE) -C hl2b5up_cicrx
 	python3 release.py
@@ -36,20 +40,26 @@ clean:
 	$(MAKE) -C hl2b3to4_main clean
 	$(MAKE) -C hl2b3to4_cicrx clean
 	$(MAKE) -C hl2b5up_main clean
+	$(MAKE) -C hl2b5up_main_iambic clean
 	$(MAKE) -C hl2b5up_6rx clean
 	$(MAKE) -C hl2b5up_cicrx clean
 	$(MAKE) -C hl2b5up_15ce clean
 	$(MAKE) -C hl2b5up_ak4951v3 clean
+	$(MAKE) -C hl2b5up_ak4951v3_yaesu clean
+	$(MAKE) -C hl2b5up_ak4951v4_yaesu clean
 
 realclean:
 	$(MAKE) -C hl2b2_main realclean
 	$(MAKE) -C hl2b3to4_main realclean
 	$(MAKE) -C hl2b3to4_cicrx realclean
 	$(MAKE) -C hl2b5up_main realclean
+	$(MAKE) -C hl2b5up_main_iambic realclean
 	$(MAKE) -C hl2b5up_6rx realclean
 	$(MAKE) -C hl2b5up_cicrx realclean
 	$(MAKE) -C hl2b5up_15ce realclean
 	$(MAKE) -C hl2b5up_ak4951v3 realclean
+	$(MAKE) -C hl2b5up_ak4951v3_yaesu realclean
+	$(MAKE) -C hl2b5up_ak4951v4_yaesu realclean
 
 
 .PHONY: all clean realclean release
