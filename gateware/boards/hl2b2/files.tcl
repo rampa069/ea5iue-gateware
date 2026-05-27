@@ -99,6 +99,10 @@ set_global_assignment -name VERILOG_FILE ../../rtl/led_flash.v
 set_global_assignment -name VERILOG_FILE ../../rtl/control.v
 set_global_assignment -name VERILOG_FILE ../../rtl/cw_basic.v
 set_global_assignment -name VERILOG_FILE ../../rtl/cw_openhpsdr.v
+set_global_assignment -name VERILOG_FILE ../../rtl/cw_sidetone.v
+set_global_assignment -name QIP_FILE ../../rtl/sin1k9r.qip
+set_global_assignment -name QIP_FILE ../../rtl/mult_s9_s8_s16.qip
+set_global_assignment -name QIP_FILE ../../rtl/mult_s16_s8_s16.qip
 set_global_assignment -name VERILOG_FILE ../../rtl/iambic.v
 set_global_assignment -name VERILOG_FILE ../../rtl/debounce.v
 set_global_assignment -name VERILOG_FILE ../../rtl/i2c_master.v
@@ -115,3 +119,4 @@ set_global_assignment -name VERILOG_FILE ../../rtl/asmi_interface.v
 
 set_global_assignment -name VERILOG_FILE ../../rtl/altera_remote_update_core.v
 set_global_assignment -name VERILOG_FILE ../../rtl/remote_update.v
+set_global_assignment -name VERILOG_FILE ../../rtl/sigma_delta_dac.sv
