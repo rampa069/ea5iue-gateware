@@ -8,6 +8,7 @@ set_global_assignment -name VERILOG_FILE ../../rtl/ad9866ctrl.v
 set_global_assignment -name VERILOG_FILE ../../rtl/ethpll.v
 
 set_global_assignment -name VERILOG_FILE ../../rtl/radio_openhpsdr1/radio.v
+set_global_assignment -name VERILOG_FILE ../../rtl/radio_openhpsdr1/cw_env_rom.v
 set_global_assignment -name VERILOG_FILE ../../rtl/radio_openhpsdr1/varcic.v
 set_global_assignment -name VERILOG_FILE ../../rtl/radio_openhpsdr1/cic.v
 set_global_assignment -name VERILOG_FILE ../../rtl/radio_openhpsdr1/cic_comb.v
