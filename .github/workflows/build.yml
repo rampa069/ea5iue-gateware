@@ -1,0 +1,86 @@
+name: Build Gateware
+
+on:
+  push:
+    branches: [main]
+    paths: ['gateware/**']
+  workflow_dispatch:
+    inputs:
+      variants:
+        description: 'Variants to build (comma-separated, or "all")'
+        default: 'all'
+      make_target:
+        description: 'Make target (all, clean, realclean)'
+        default: 'all'
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux, ARM64]
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - hl2b2_main
+          - hl2b3to4_main
+          - hl2b3to4_cicrx
+          - hl2b5up_main
+          - hl2b5up_main_iambic
+          - hl2b5up_6rx
+          - hl2b5up_cicrx
+          - hl2b5up_15ce
+          - hl2b5up_ak4951v3
+          - hl2b5up_ak4951v3_yaesu
+          - hl2b5up_ak4951v4_yaesu
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ${{ matrix.variant }}
+        working-directory: gateware/variants/${{ matrix.variant }}
+        run: |
+          echo "::group::Build ${{ matrix.variant }}"
+          make ${{ github.event.inputs.make_target || 'all' }} 2>&1 | tee build.log
+          echo "::endgroup::"
+
+      - name: Check build result
+        working-directory: gateware/variants/${{ matrix.variant }}
+        run: |
+          if [ -f build/hermeslite.sof ]; then
+            echo "Build successful: hermeslite.sof found"
+          elif [ -f build/hermeslite.flow.rpt ]; then
+            echo "Build failed - showing errors:"
+            grep -i 'error' build/hermeslite.flow.rpt | grep -v 'Peak virtual\|Processing ended\|Elapsed time\|Total CPU' || true
+            exit 1
+          else
+            echo "Build produced no output files"
+            exit 1
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}
+          path: |
+            gateware/variants/${{ matrix.variant }}/build/*.sof
+            gateware/variants/${{ matrix.variant }}/build/*.jam
+            gateware/variants/${{ matrix.variant }}/build/*.svf
+          retention-days: 30
+
+  release:
+    needs: build
+    runs-on: [self-hosted, Linux, ARM64]
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/**
+          generate_release_notes: true
