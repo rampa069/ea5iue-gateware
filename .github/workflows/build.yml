@@ -63,7 +63,8 @@ jobs:
         with:
           name: ${{ matrix.variant }}
           path: |
-            gateware/variants/${{ matrix.variant }}/build/*.sof
+            gateware/variants/${{ matrix.variant }}/build/*.rbf
+            gateware/variants/${{ matrix.variant }}/build/*.jic
             gateware/variants/${{ matrix.variant }}/build/*.jam
             gateware/variants/${{ matrix.variant }}/build/*.svf
           retention-days: 30
