@@ -99,6 +99,8 @@ set_global_assignment -name VERILOG_FILE ../../rtl/control.v
 set_global_assignment -name VERILOG_FILE ../../rtl/cw_basic.v
 set_global_assignment -name VERILOG_FILE ../../rtl/cw_openhpsdr.v
 set_global_assignment -name VERILOG_FILE ../../rtl/localaudio/cw_sidetone.v
+set_global_assignment -name VERILOG_FILE ../../rtl/localaudio/localaudio.v
+set_global_assignment -name VERILOG_FILE ../../rtl/localaudio/i2s_ak4951.v
 set_global_assignment -name QIP_FILE ../../rtl/localaudio/sin1k9r.qip
 set_global_assignment -name QIP_FILE ../../rtl/localaudio/mult_s9_s8_s16.qip
 set_global_assignment -name QIP_FILE ../../rtl/localaudio/mult_s16_s8_s16.qip
