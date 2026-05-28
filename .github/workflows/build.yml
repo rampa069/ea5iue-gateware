@@ -5,17 +5,10 @@ on:
     branches: [main]
     paths: ['gateware/**']
   workflow_dispatch:
-    inputs:
-      variants:
-        description: 'Variants to build (comma-separated, or "all")'
-        default: 'all'
-      make_target:
-        description: 'Make target (all, clean, realclean)'
-        default: 'all'
 
 jobs:
   build:
-    runs-on: [self-hosted, Linux, ARM64]
+    runs-on: [self-hosted, Linux, X64]
     strategy:
       fail-fast: false
       matrix:
@@ -31,9 +24,6 @@ jobs:
           - hl2b5up_ak4951v3
           - hl2b5up_ak4951v3_yaesu
           - hl2b5up_ak4951v4_yaesu
-    env:
-      QUARTUS_ROOTDIR: /home/rampa/Quartus/quartus
-      PATH: /home/rampa/Quartus/quartus/bin:/usr/local/bin:/usr/bin:/bin
     steps:
       - uses: actions/checkout@v4
 
@@ -41,7 +31,8 @@ jobs:
         working-directory: gateware/variants/${{ matrix.variant }}
         run: |
           echo "::group::Build ${{ matrix.variant }}"
-          make ${{ github.event.inputs.make_target || 'all' }} 2>&1 | tee build.log
+          docker run --rm -v "$GITHUB_WORKSPACE:/build" -w "/build/gateware/variants/${{ matrix.variant }}" \
+            raetro/quartus:21.1.1 make all 2>&1 | tee build.log
           echo "::endgroup::"
 
       - name: Check build result
@@ -71,7 +62,7 @@ jobs:
 
   release:
     needs: build
-    runs-on: [self-hosted, Linux, ARM64]
+    runs-on: [self-hosted, Linux, X64]
     if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: write
